@@ -1,0 +1,177 @@
+{% extends 'template.html' %}
+{% load bootstrap4 %}
+
+{% block content %}
+
+<div class="row">
+        <div class="col-md-2"></div>
+    <div class="col-md-7" align="center">
+        <canvas id="mask_canvas"></canvas>
+    </div>
+    <div class="col-md-1" align="center">
+        <canvas id="tool_canvas"></canvas>
+    </div>
+    <div class="col-md-2"></div>
+</div>
+<br />
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-2">
+        <h4 class="text-primary" id="display-brush-size">Brush size: 5</h4>
+    </div>
+    <div class="col-md-6">
+        <input type="range" class="custom-range" id="brush-size" min="5" max="50" value="5">
+    </div>
+    <div class="col-md-2"></div>
+</div>
+<br />
+
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <button type="button" class="btn btn-danger" id="btn-clear">Clear</button>
+        <button type="button" class="btn btn-success" id="btn-save">Save</button>
+    </div>
+    <div class="col-md-2"></div>
+</div>
+<br />
+
+<script>
+    var offsetLeft = 0;
+    var offsetTop = 0;
+    var clickX = new Array();
+    var clickY = new Array();
+    var clickDrag = new Array();
+    var clickSize = new Array();
+    var paint;
+    var context = null;
+    var context_tool = null;
+    var brush_size = 5;
+
+    var canvas = document.getElementById('mask_canvas');
+    var canvas_tool = document.getElementById('tool_canvas');
+    var btnClear = document.getElementById("btn-clear");
+    var slideBrushSize = document.getElementById("brush-size");
+    var displayBrushSize = document.getElementById("display-brush-size");
+
+
+    init_canvas();
+    init_canvas_tool();
+
+    function init_canvas() {
+        slideBrushSize.setAttribute("value",brush_size);      
+
+        canvasWidth = 484;      //1936 / 4
+        canvasHeight = 304;     //1216 / 4
+
+        canvas.setAttribute('width', canvasWidth);
+        canvas.setAttribute('height', canvasHeight);
+        canvas.setAttribute('style', "border:1px solid #000000;");
+        // canvas.setAttribute('id', 'canvas');
+
+        context = canvas.getContext("2d");
+        
+        var rect = context.canvas.getBoundingClientRect();
+        offsetLeft = rect.left;
+        offsetTop = rect.top;
+
+    }
+
+    function init_canvas_tool() {
+        var canvasWidth = 50;      //1936 / 4
+        var canvasHeight = 304;     //1216 / 4
+
+        canvas_tool.setAttribute('width', canvasWidth);
+        canvas_tool.setAttribute('height', canvasHeight);
+        canvas_tool.setAttribute('style', "border:1px solid #000000;");
+
+        context_tool = canvas_tool.getContext("2d");
+        var rect = context_tool.canvas.getBoundingClientRect();
+        var offsetLeft = rect.left;
+        var offsetTop = rect.top;
+        console.log(offsetLeft)
+        console.log(offsetTop)
+        get_brush_size();
+        
+    }
+
+    $('#mask_canvas').mousedown(function (e) {
+        var mouseX = e.clientX - offsetLeft;
+        var mouseY = e.clientY - offsetTop;
+        paint = true;
+        addClick(mouseX, mouseY);
+        redraw();
+    });
+
+    $('#mask_canvas').mousemove(function (e) {
+        var mouseX = e.clientX - offsetLeft;
+        var mouseY = e.clientY - offsetTop;
+        if (paint) {
+            addClick(mouseX, mouseY, true);
+            redraw();
+        }
+    });
+
+    $('#mask_canvas').mouseup(function (e) {
+        paint = false;
+    });
+
+    $('#mask_canvas').mouseleave(function (e) {
+        paint = false;
+    });
+
+
+    function addClick(x, y, dragging) {
+        clickX.push(x);
+        clickY.push(y);
+        clickDrag.push(dragging);
+        clickSize.push(brush_size);
+    }
+
+    function redraw() {
+        context.strokeStyle = "blue";
+        context.lineJoin = "round";
+        this.clear();
+        
+        for (var i = 0; i < clickX.length; i++) {
+            context.beginPath();
+            if (clickDrag[i] && i) {
+                context.moveTo(clickX[i - 1], clickY[i - 1]);
+            } else {
+                context.moveTo(clickX[i] - 1, clickY[i]);
+            }
+            if (clickSize[i]){
+                context.lineWidth = clickSize[i];
+            }else{
+                context.lineWidth = brush_size;
+            }
+            context.lineTo(clickX[i], clickY[i]);
+            context.closePath();
+            context.stroke();
+            context.globalAlpha = 0.5;
+        }
+    }
+    
+
+    btnClear.addEventListener("click", clear);
+    slideBrushSize.addEventListener("change", get_brush_size);
+
+    function clear() {
+        console.log('clear')
+        context.clearRect(0, 0, context.canvas.width, context.canvas.height); // Clears the canvas
+    }
+
+    function get_brush_size() {
+        brush_size = slideBrushSize.value;
+        displayBrushSize.innerHTML = "Brush size: " + brush_size;
+        var rect = context_tool.canvas.getBoundingClientRect();
+        var offsetLeft = rect.left;
+        var offsetTop = rect.top;
+        console.log(offsetLeft)
+        console.log(offsetTop)
+        context_tool.fillStyle = 'blue'
+        context_tool.fillRect(0,0,brush_size,brush_size);
+    }
+
+</script>
+{% endblock %}
