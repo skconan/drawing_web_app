@@ -3,39 +3,45 @@
 
 {% block content %}
 
-<div class="row">
-    <div class="col-md-2"></div>
-    <div class="col-md-6" align="center">
-        <p class="text-primary" id="img-name">Image name: {{ img_name }}</p>
-        <canvas id="mask_canvas"></canvas>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-6" align="center">
+            <p class="text-primary" id="img-name">Image name: {{ img_name }}</p>
+            <canvas id="mask-canvas"></canvas>
+        </div>
+        <div class="col-md-2" align="left">
+            <p class="text-primary"> Brush size </p>
+            <canvas id="tool_canvas"></canvas>
+        </div>
+        <div class="col-md-2"></div>
     </div>
-    <div class="col-md-2" align="left">
-        <p class="text-primary"> Brush size </p>
-        <canvas id="tool_canvas"></canvas>
+    <br />
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-2">
+            <h4 class="text-primary" id="display-brush-size">Brush size: 5</h4>
+        </div>
+        <div class="col-md-6">
+            <input type="range" class="custom-range" id="brush-size" min="5" max="50" value="5">
+        </div>
+        <div class="col-md-2"></div>
     </div>
-    <div class="col-md-2"></div>
-</div>
-<br />
-<div class="row">
-    <div class="col-md-2"></div>
-    <div class="col-md-2">
-        <h4 class="text-primary" id="display-brush-size">Brush size: 5</h4>
-    </div>
-    <div class="col-md-6">
-        <input type="range" class="custom-range" id="brush-size" min="5" max="50" value="5">
-    </div>
-    <div class="col-md-2"></div>
-</div>
-<br />
+    <br />
 
-<div class="row">
-    <div class="col-md-2"></div>
-    <div class="col-md-8">
-        <button type="button" class="btn btn-danger" id="btn-clear">Clear</button>
-        <button type="button" class="btn btn-success" id="btn-save">Save</button>
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <input id="mask-result" name="mask-result" type="hidden" value="">
+            <input name="image-name" type="hidden" value="{{ img_name }}">
+            
+            <button type="button" class="btn btn-danger" id="btn-clear">Clear</button>
+            <button type="submit" class="btn btn-success" id="btn-save">Save</button>
+        </div>
+        <div class="col-md-2"></div>
     </div>
-    <div class="col-md-2"></div>
-</div>
+</form>
 <br />
 
 <script>
@@ -50,21 +56,22 @@
     var context_tool = null;
     var brush_size = 5;
 
-    var canvas = document.getElementById('mask_canvas');
+    var canvas = document.getElementById('mask-canvas');
+    var maskResult = document.getElementById('mask-result');
     var canvas_tool = document.getElementById('tool_canvas');
     var btnClear = document.getElementById("btn-clear");
     var slideBrushSize = document.getElementById("brush-size");
     var displayBrushSize = document.getElementById("display-brush-size");
-    
+
     var imgName = document.getElementById("img-name");
-    var img_name = imgName.innerHTML.split(" ")[2]+".jpg"
-    var img_url = "http://127.0.0.1:8000/media/dataset/images/"+img_name;
+    var img_name = imgName.innerHTML.split(" ")[2] + ".jpg"
+    var img_url = "http://127.0.0.1:8000/media/dataset/images/" + img_name;
     var background = new Image();
     background.src = img_url;
     console.log(img_url)
     console.log(background.src)
-    
-    background.onload = function() {
+
+    background.onload = function () {
         init_canvas();
         init_canvas_tool();
     };
@@ -105,10 +112,10 @@
         console.log(offsetTop)
         get_brush_size();
         clear_line();
-        
+
     }
 
-    $('#mask_canvas').mousedown(function (e) {
+    $('#mask-canvas').mousedown(function (e) {
         var mouseX = e.clientX - offsetLeft;
         var mouseY = e.clientY - offsetTop;
         paint = true;
@@ -116,7 +123,7 @@
         redraw();
     });
 
-    $('#mask_canvas').mousemove(function (e) {
+    $('#mask-canvas').mousemove(function (e) {
         var mouseX = e.clientX - offsetLeft;
         var mouseY = e.clientY - offsetTop;
         if (paint) {
@@ -125,11 +132,11 @@
         }
     });
 
-    $('#mask_canvas').mouseup(function (e) {
+    $('#mask-canvas').mouseup(function (e) {
         paint = false;
     });
 
-    $('#mask_canvas').mouseleave(function (e) {
+    $('#mask-canvas').mouseleave(function (e) {
         paint = false;
     });
 
@@ -163,13 +170,19 @@
             context.stroke();
             // context.globalAlpha = 0.5;
         }
+        update_result()
     }
 
+    function update_result() {
+        var data = canvas.toDataURL();
+        console.log(data)
+        maskResult.value = data;
+    }
 
     btnClear.addEventListener("click", clear);
     slideBrushSize.addEventListener("change", get_brush_size);
 
-    function clear_line(){
+    function clear_line() {
         context.clearRect(0, 0, context.canvas.width, context.canvas.height); // Clears the canvas
         context.drawImage(background, 0, 0);
     }
