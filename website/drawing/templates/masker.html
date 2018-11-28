@@ -5,10 +5,12 @@
 
 <div class="row">
     <div class="col-md-2"></div>
-    <div class="col-md-7" align="center">
+    <div class="col-md-6" align="center">
+        <p class="text-primary" id="img-name">Image name: {{ img_name }}</p>
         <canvas id="mask_canvas"></canvas>
     </div>
-    <div class="col-md-1" align="center">
+    <div class="col-md-2" align="left">
+        <p class="text-primary"> Brush size </p>
         <canvas id="tool_canvas"></canvas>
     </div>
     <div class="col-md-2"></div>
@@ -54,11 +56,18 @@
     var slideBrushSize = document.getElementById("brush-size");
     var displayBrushSize = document.getElementById("display-brush-size");
     
+    var imgName = document.getElementById("img-name");
+    var img_name = imgName.innerHTML.split(" ")[2]+".jpg"
+    var img_url = "http://127.0.0.1:8000/media/dataset/images/"+img_name;
     var background = new Image();
-    background.src = "http://127.0.0.1:8000/media/dataset/images/1543344041.jpg";
-
-    init_canvas();
-    init_canvas_tool();
+    background.src = img_url;
+    console.log(img_url)
+    console.log(background.src)
+    
+    background.onload = function() {
+        init_canvas();
+        init_canvas_tool();
+    };
 
     function init_canvas() {
         slideBrushSize.setAttribute("value", brush_size);
@@ -68,7 +77,7 @@
 
         canvas.setAttribute('width', canvasWidth);
         canvas.setAttribute('height', canvasHeight);
-        canvas.setAttribute('style', "border:1px solid #000000;");
+        canvas.setAttribute('style', "border:3px solid #eeeeee;");
         // canvas.setAttribute('id', 'canvas');
 
         context = canvas.getContext("2d");
@@ -76,7 +85,8 @@
         var rect = context.canvas.getBoundingClientRect();
         offsetLeft = rect.left;
         offsetTop = rect.top;
-        this.clear_line();
+        clear_line();
+        console.log('init canvas')
     }
 
     function init_canvas_tool() {
@@ -94,7 +104,8 @@
         console.log(offsetLeft)
         console.log(offsetTop)
         get_brush_size();
-
+        clear_line();
+        
     }
 
     $('#mask_canvas').mousedown(function (e) {
@@ -131,7 +142,7 @@
     }
 
     function redraw() {
-        context.strokeStyle = "blue";
+        context.strokeStyle = "yellow";
         context.lineJoin = "round";
         this.clear_line();
 
@@ -160,14 +171,12 @@
 
     function clear_line(){
         context.clearRect(0, 0, context.canvas.width, context.canvas.height); // Clears the canvas
-        
         context.drawImage(background, 0, 0);
     }
 
     function clear() {
         console.log('clear')
         context.clearRect(0, 0, context.canvas.width, context.canvas.height); // Clears the canvas
-        
         context.drawImage(background, 0, 0);
         clickX = [];
         clickY = [];
@@ -183,7 +192,7 @@
         var offsetTop = rect.top;
         console.log(offsetLeft)
         console.log(offsetTop)
-        context_tool.fillStyle = 'blue'
+        context_tool.fillStyle = 'yellow'
         context_tool.fillRect(0, 0, brush_size, brush_size);
     }
 
