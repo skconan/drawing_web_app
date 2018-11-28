@@ -4,7 +4,7 @@
 {% block content %}
 
 <div class="row">
-        <div class="col-md-2"></div>
+    <div class="col-md-2"></div>
     <div class="col-md-7" align="center">
         <canvas id="mask_canvas"></canvas>
     </div>
@@ -53,13 +53,15 @@
     var btnClear = document.getElementById("btn-clear");
     var slideBrushSize = document.getElementById("brush-size");
     var displayBrushSize = document.getElementById("display-brush-size");
-
+    
+    var background = new Image();
+    background.src = "http://127.0.0.1:8000/media/dataset/images/1543344041.jpg";
 
     init_canvas();
     init_canvas_tool();
 
     function init_canvas() {
-        slideBrushSize.setAttribute("value",brush_size);      
+        slideBrushSize.setAttribute("value", brush_size);
 
         canvasWidth = 484;      //1936 / 4
         canvasHeight = 304;     //1216 / 4
@@ -70,11 +72,11 @@
         // canvas.setAttribute('id', 'canvas');
 
         context = canvas.getContext("2d");
-        
+
         var rect = context.canvas.getBoundingClientRect();
         offsetLeft = rect.left;
         offsetTop = rect.top;
-
+        this.clear_line();
     }
 
     function init_canvas_tool() {
@@ -83,7 +85,7 @@
 
         canvas_tool.setAttribute('width', canvasWidth);
         canvas_tool.setAttribute('height', canvasHeight);
-        canvas_tool.setAttribute('style', "border:1px solid #000000;");
+        // canvas_tool.setAttribute('style', "border:1px solid #000000;");
 
         context_tool = canvas_tool.getContext("2d");
         var rect = context_tool.canvas.getBoundingClientRect();
@@ -92,7 +94,7 @@
         console.log(offsetLeft)
         console.log(offsetTop)
         get_brush_size();
-        
+
     }
 
     $('#mask_canvas').mousedown(function (e) {
@@ -131,8 +133,8 @@
     function redraw() {
         context.strokeStyle = "blue";
         context.lineJoin = "round";
-        this.clear();
-        
+        this.clear_line();
+
         for (var i = 0; i < clickX.length; i++) {
             context.beginPath();
             if (clickDrag[i] && i) {
@@ -140,25 +142,37 @@
             } else {
                 context.moveTo(clickX[i] - 1, clickY[i]);
             }
-            if (clickSize[i]){
+            if (clickSize[i]) {
                 context.lineWidth = clickSize[i];
-            }else{
+            } else {
                 context.lineWidth = brush_size;
             }
             context.lineTo(clickX[i], clickY[i]);
             context.closePath();
             context.stroke();
-            context.globalAlpha = 0.5;
+            // context.globalAlpha = 0.5;
         }
     }
-    
+
 
     btnClear.addEventListener("click", clear);
     slideBrushSize.addEventListener("change", get_brush_size);
 
+    function clear_line(){
+        context.clearRect(0, 0, context.canvas.width, context.canvas.height); // Clears the canvas
+        
+        context.drawImage(background, 0, 0);
+    }
+
     function clear() {
         console.log('clear')
         context.clearRect(0, 0, context.canvas.width, context.canvas.height); // Clears the canvas
+        
+        context.drawImage(background, 0, 0);
+        clickX = [];
+        clickY = [];
+        clickDrag = [];
+        clickSize = [];
     }
 
     function get_brush_size() {
@@ -170,7 +184,7 @@
         console.log(offsetLeft)
         console.log(offsetTop)
         context_tool.fillStyle = 'blue'
-        context_tool.fillRect(0,0,brush_size,brush_size);
+        context_tool.fillRect(0, 0, brush_size, brush_size);
     }
 
 </script>

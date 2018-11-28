@@ -2,11 +2,13 @@ from django.shortcuts import render
 from .forms import UploadForm
 from django.http import HttpResponse
 from image_processing.image_processing import *
+
 # Create your views here.
 def masker(req):
     template = 'masker.html'
+    img_name = '1543344041.jpg';
+    img_url = 'http://127.0.0.1:8000/media/dataset/images/'+img_name
     context = {}
-
     return render(req, template, context)
 
 def upload(req):
