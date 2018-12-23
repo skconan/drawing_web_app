@@ -4,4 +4,7 @@ from website import settings
 # Create your models here.
 
 class VideoUpload(models.Model):
-    video = models.FileField(upload_to=settings.MEDIA_ROOT+"videos/")
+    name = models.CharField(primary_key=True,max_length=50)
+    video = models.FileField(upload_to="videos")
+    def __str__(self):
+        return self.name
