@@ -35,9 +35,11 @@
         <div class="col-md-8">
             <input id="mask-result" name="mask-result" type="hidden" value="">
             <input name="image-name" type="hidden" value="{{ img_name }}">
+            <input id="img-url" type="hidden" value="{{ img_url }}">
             
             <button type="button" class="btn btn-danger" id="btn-clear">Clear</button>
             <button type="submit" class="btn btn-success" id="btn-save">Save</button>
+            <button type="button" onClick="location.reload()" class="btn btn-primary">Refresh</button>
         </div>
         <div class="col-md-2"></div>
     </div>
@@ -64,8 +66,10 @@
     var displayBrushSize = document.getElementById("display-brush-size");
 
     var imgName = document.getElementById("img-name");
-    var img_name = imgName.innerHTML.split(" ")[2] + ".jpg"
-    var img_url = "http://127.0.0.1:8000/media/dataset/images/" + img_name;
+    var img_name = imgName.innerHTML.split(" ")[2] + ".jpg";
+    var img_url = document.getElementById("img-url").value;
+    console.log("img_url")
+    console.log(img_url)
     var background = new Image();
     background.src = img_url;
     console.log(img_url)
