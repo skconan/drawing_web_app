@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .forms import UploadForm
 from django.http import HttpResponse
 from image_processing.image_processing import *
@@ -18,27 +18,29 @@ def masker(req):
         i = Image.objects.get(name=image_name)
         i.mask = True
         i.save()
+        return redirect('masker')
     else:      
         i = Image.objects.filter(mask=False)
         index = random.randint(0,len(i)-1)
         image_name = i[index].name
-        # img_url = 'http://127.0.0.1:8000/media/dataset/images/'+img_name+".jpg"
+        # image_url = i[index].url
+        image_url = 'http://localhost:8000/media/dataset/images/'+image_name+".jpg"
         
-        context = {'img_name':image_name}
+        context = {'img_name':image_name,'img_url':image_url}
     return render(req, template, context)
 
 def upload(req):
     template = 'upload.html'
     if req.method == 'POST':
         print(req)
-
         form = UploadForm(req.POST, req.FILES)
         if form.is_valid():
-            form.save()
+            # form.save()
             form = form.save(commit=False)
             form.original_filename = req.FILES['video'].name
+            form.name = req.FILES['video'].name
             form.save()
-            video2img(req.FILES['video'].name,10)
+            video2img(req.FILES['video'].name,15)
             return HttpResponse('home')
     else:
         form = UploadForm()
