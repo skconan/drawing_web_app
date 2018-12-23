@@ -23,6 +23,7 @@ def video2img(file_name, sampling):
     count = 0
     count_false = 0
     while(cap.isOpened()):
+        image_name = str(time.time()).replace(".","_")
         ret, frame = cap.read()
         if not ret:
             count_false += 1
@@ -32,14 +33,13 @@ def video2img(file_name, sampling):
             continue
 
         if count % sampling == 0 and ret:
-            image_name = str(time.time())[:10]
+            
             c = 484  # //1936 / 4
             r = 304  # //1216 / 4
             img = cv.resize(frame, (c, r))
-            cv.imwrite(PATH_IMG + "\\" + image_name + ".jpg", img)
+            cv.imwrite(PATH_IMG + "\\" + image_name+ ".jpg", img)
             record(image_name)
             count_false = 0
-
         count += 1
 
 def save_canvas(image_data,image_name):
