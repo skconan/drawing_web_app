@@ -1,6 +1,6 @@
 import cv2 as cv
 import time
-from .models import Image
+from .models import Image as Img
 from website import settings
 from io import BytesIO
 from PIL import Image
@@ -13,7 +13,7 @@ PATH_GROUNDTRUTH = settings.MEDIA_ROOT+"dataset/groundTruth/"
 
 
 def record(image_name):
-    i = Image(image_name, False)
+    i = Img(image_name, False)
     i.save()
 
 
