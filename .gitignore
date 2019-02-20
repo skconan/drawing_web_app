@@ -17,10 +17,9 @@ env.bak/
 venv.bak/
 
 # media
-*.mp4
-*.jpg
-*.gif
-*.png
+# *.mp4
+# *.jpg
+# *.gif
+# *.png
 
-static/
 .vscode
