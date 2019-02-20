@@ -37,7 +37,7 @@ def video2img(file_name, sampling):
             c = 484  # //1936 / 4
             r = 304  # //1216 / 4
             img = cv.resize(frame, (c, r))
-            cv.imwrite(PATH_IMG + "/" + image_name+ ".jpg", img)
+            cv.imwrite(PATH_IMG + image_name+ ".jpg", img)
             record(image_name)
             count_false = 0
         count += 1
