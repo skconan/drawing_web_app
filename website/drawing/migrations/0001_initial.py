@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='VideoUpload',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('name', models.CharField(primary_key=True ,max_length=50)),
                 ('video', models.FileField(upload_to='')),
             ],
         ),
