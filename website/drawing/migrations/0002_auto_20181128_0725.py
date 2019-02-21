@@ -13,6 +13,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='videoupload',
             name='video',
-            field=models.FileField(upload_to='C:\\Users\\skconan\\Desktop\\drawing_web_app\\website\\website\\media/videos/'),
+            field=models.FileField(upload_to="videos"),
         ),
     ]

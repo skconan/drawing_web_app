@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'website',
     'drawing',
     'bootstrap4',
     'crispy_forms',
@@ -124,7 +125,7 @@ USE_TZ = True
 
 
 PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
-STATIC_ROOT = os.path.join(PROJECT_DIR, 'static/')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 MEDIA_ROOT= os.path.join(PROJECT_DIR, 'media/')
 MEDIA_URL= "/media/"
