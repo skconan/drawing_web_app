@@ -24,7 +24,7 @@ def masker(req):
         index = random.randint(0,len(i)-1)
         image_name = i[index].name
         # image_url = i[index].url
-        image_url = 'http://localhost:8000/media/dataset/images/'+image_name+".jpg"
+        image_url = 'http://robin-gpu.cpe.ku.ac.th:8000/media/dataset/images/'+image_name+".jpg"
         
         context = {'img_name':image_name,'img_url':image_url}
     return render(req, template, context)
