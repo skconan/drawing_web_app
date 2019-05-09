@@ -25,7 +25,7 @@ SECRET_KEY = '58-dvcfa-r)s)iced-#l1oq#djk6u9gr1*&8#ygplae^h*70p&'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["158.108.180.24","robin-gpu.cpe.ku.ac.th"]
 
 
 # Application definition
