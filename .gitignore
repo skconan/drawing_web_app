@@ -24,5 +24,8 @@ venv.bak/
 
 .vscode
 
-static/
+*\static\
+*\static\*
+static\
+static
 media/
