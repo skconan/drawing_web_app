@@ -8,8 +8,8 @@ import re
 import base64
 import numpy as np
 
-PATH_IMG = settings.MEDIA_ROOT+"dataset/images/"
-PATH_GROUNDTRUTH = settings.MEDIA_ROOT+"dataset/groundTruth/"
+PATH_IMG = settings.MEDIA_ROOT+"/dataset/images/"
+PATH_GROUNDTRUTH = settings.MEDIA_ROOT+"/dataset/groundTruth/"
 
 
 def record(image_name):
