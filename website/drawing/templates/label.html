@@ -1,0 +1,82 @@
+{% extends 'template.html' %}
+{% load bootstrap4 %}
+
+{% block content %}
+<!-- <meta name="viewport" content="user-scalable=no,initial-scale=1.0,maximum-scale=1.0" /> -->
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-6" align="center">
+            <p class="text-primary" id="img-name">Image name: {{ img_name }}</p>
+            <div class="board" id="title-board"></div>
+        </div>
+        <div class="col-md-2" align="left">
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+    <br />
+    <br />
+
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+            <div class="row">
+                <div class="col-md-12">
+                    <input id="mask-result" name="mask-result" type="hidden" value="">
+                    <input name="image-name" type="hidden" value="{{ img_name }}">
+                    <input id="img-url" type="hidden" value="{{ img_url }}">
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-8">
+                    <button type="button" class="btn btn-danger" id="btn-clear">Clear</button>
+                    <button type="submit" class="btn btn-success" id="btn-save">Save</button>
+                </div>
+                <div class="col-md-4">
+                    <button type="button" onClick="location.reload()" class="btn btn-primary">Refresh</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+</form>
+<br />
+<style>
+    .board {
+        margin: 0 auto;
+    }
+</style>
+<script>
+    var maskResult = document.getElementById('mask-result');
+    var imgName = document.getElementById("img-name");
+    var img_name = imgName.innerHTML.split(" ")[2] + ".jpg";
+    var img_url = document.getElementById("img-url").value;
+    var imageBoard;
+    var img = new Image();
+    img.src = img_url;
+    console.log(img.src)
+    img.onload = function () {
+        document.getElementById('title-board').style.height = this.height + 2 + 'px';
+        document.getElementById('title-board').style.width = this.width + 2 + 'px';
+        imageBoard = new DrawingBoard.Board('title-board', {
+            background: img_url,
+            color: '#ff0',
+            webStorage: false,
+            controls: [
+                { Size: { type: "range" } },
+                { Navigation: { back: false, forward: false } },
+                { 'DrawingMode': { pencil: true, eraser: false, filler: false } }
+            ]
+        });
+        imageBoard.ev.bind('board:userAction', update_result);
+    };
+
+    function update_result() {
+        var data = imageBoard.getImg();
+        console.log(data)
+        maskResult.value = data;
+    }
+</script>
+{% endblock %}
