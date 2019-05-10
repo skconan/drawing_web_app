@@ -4,13 +4,14 @@ from django.http import HttpResponse
 from image_processing.image_processing import *
 from image_processing.models import Image
 import random
+import website.settings as settings
 
 PATH_IMG = settings.MEDIA_URL+"dataset/images/"
 
 # Create your views here.
-def masker(req):
+def label(req):
     context = {}
-    template = 'masker.html'
+    template = 'label.html'
     if req.method == 'POST':
         print("POST")
         image_data = req.POST['mask-result']
@@ -19,17 +20,14 @@ def masker(req):
         i = Image.objects.get(name=image_name)
         i.mask = True
         i.save()
-        return redirect('masker')
+        return redirect('label')
     else:      
         i = Image.objects.filter(mask=False)
         index = random.randint(0,len(i)-1)
         image_name = i[index].name
-        # image_url = i[index].url
-        url = req.get_full_path().split["/"]
-        url = "".join(url[0:3])
-        print(url)
-        image_url = url + '/media/dataset/images/'+image_name+".jpg"
-        
+    
+        image_url = settings.MEDIA_URL + 'dataset/images/'+image_name+".jpg"
+        print(image_url)
         context = {'img_name':image_name,'img_url':image_url}
     return render(req, template, context)
 
@@ -49,4 +47,23 @@ def upload(req):
     else:
         form = UploadForm()
     context = {'form':form}
+    return render(req, template, context)
+
+def index(req):
+    template = 'index.html'
+    # if req.method == 'POST':
+    #     print(req)
+    #     form = UploadForm(req.POST, req.FILES)
+    #     if form.is_valid():
+    #         # form.save()
+    #         form = form.save(commit=False)
+    #         form.original_filename = req.FILES['video'].name
+    #         form.name = req.FILES['video'].name
+    #         form.save()
+    #         video2img(req.FILES['video'].name,15)
+    #         return HttpResponse('home')
+    # else:
+    #     form = UploadForm()
+    # context = {'form':form}
+    context = {}
     return render(req, template, context)
