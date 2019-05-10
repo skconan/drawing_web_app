@@ -25,7 +25,7 @@ SECRET_KEY = '58-dvcfa-r)s)iced-#l1oq#djk6u9gr1*&8#ygplae^h*70p&'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["158.108.180.24","robin-gpu.cpe.ku.ac.th"]
+ALLOWED_HOSTS = ["158.108.180.24","robin-gpu.cpe.ku.ac.th","127.0.0.1"]
 
 
 # Application definition
@@ -125,7 +125,7 @@ USE_TZ = True
 
 
 PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 STATIC_URL = '/static/'
-MEDIA_ROOT= os.path.join(PROJECT_DIR, 'media/')
+MEDIA_ROOT= os.path.join(PROJECT_DIR, 'media')
 MEDIA_URL= "/media/"
