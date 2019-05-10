@@ -24,5 +24,9 @@ urlpatterns = [
     path('', views_drawing.index, name="index"),
     path('index/', views_drawing.index, name="index"),
     path('label/', views_drawing.label, name="label"),
-    path('upload/', views_drawing.upload, name="upload")
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)   
+    path('upload/', views_drawing.upload, name="upload"),
+    path('dataset/<int:page>', views_drawing.dataset, name="dataset"),
+    path('dataset/', views_drawing.dataset, name="dataset"),
+    path('videos/<int:page>', views_drawing.videos, name="videos"),
+    path('videos/', views_drawing.videos, name="videos")
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)   + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)   
