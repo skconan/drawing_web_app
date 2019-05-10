@@ -25,3 +25,4 @@ venv.bak/
 .vscode
 
 static/
+media/
