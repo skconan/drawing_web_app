@@ -7,11 +7,15 @@ import random
 import website.settings as settings
 
 from image_processing.models import Image as ImageTable
+from .models import VideoUpload as VideoTable
 
 PATH_IMG = settings.MEDIA_URL+"dataset/images/"
 
 # Create your views here.
 def label(req):
+    images_list = ImageTable.objects.all()
+    number_of_img = images_list.count()
+    number_of_label = ImageTable.objects.filter(mask=True).count()
     context = {}
     template = 'label.html'
     if req.method == 'POST':
@@ -29,8 +33,13 @@ def label(req):
         image_name = i[index].name
     
         image_url = settings.MEDIA_URL + 'dataset/images/'+image_name+".jpg"
-        print(image_url)
-        context = {'img_name':image_name,'img_url':image_url}
+ 
+        context = {
+            'img_name':image_name,
+            'img_url':image_url,
+            'no_img' : number_of_img,
+        'no_label' : number_of_label,
+        }
     return render(req, template, context)
 
 def upload(req):
@@ -45,7 +54,7 @@ def upload(req):
             form.name = req.FILES['video'].name
             form.save()
             video2img(req.FILES['video'].name,15)
-            return HttpResponse('home')
+            return render(req, "status.html", {"status":"Video Uploaded"})
     else:
         form = UploadForm()
     context = {'form':form}
@@ -73,9 +82,11 @@ def index(req):
 
 def dataset(req,page=1):
     images_list = ImageTable.objects.all()
+    number_of_img = images_list.count()
+    number_of_label = ImageTable.objects.filter(mask=True).count()
     # images_list = images_list.order_by('-created_date')
 
-    data = [[],[],[],[],[]]
+    data = [[]]*5
     count = 0
     data_per_page = 40
     
@@ -93,11 +104,61 @@ def dataset(req,page=1):
     page_list = list(range(page,page + 11))
     print(page_list)
     
-    field = {'data':data,'page':page_list,'current_page':page, 'next_page' : page + 1, 'previous_page' : page - 1}
+    field = {
+        'no_img' : number_of_img,
+        'no_label' : number_of_label,
+        'data':data,
+        'page':page_list,
+        'current_page':page, 
+        'next_page' : page + 1, 
+        'previous_page' : page - 1
+    }
     # for f in csv_file:
     #     file_list["name"].append(name)
     # file_list["url"].append(f)
         #  "url": f}
     context = {'field':field}
     template = 'dataset.html'
+    return render(req, template, context)
+
+def videos(req,page=1):
+    vdo_list = VideoTable.objects.all()
+    number_of_vdo = vdo_list.count()
+    # number_of_label = ImageTable.objects.filter(mask=True).count()
+    # vdo_list = vdo_list.order_by('-created_date')
+
+    data = [[]]*2
+    count = 0
+    data_per_page = 40
+    
+    start_index = (page-1)*data_per_page
+    stop_index = page*data_per_page
+    stop = min(stop_index,len(vdo_list))
+    print(stop)
+    for vdo in vdo_list[start_index:stop]:
+        image_url = settings.MEDIA_URL + 'videos/'+vdo.name
+        data[count].append([image_url, str(vdo.name)])
+        count += 1
+        if count == 2:
+            count = 0
+
+    # page_list = list(range(1,len(vdo_list)//data_per_page + 1))[:10]
+    page_list = list(range(page,page + 2))
+    print(page_list)
+    
+    field = {
+        'no_vdo' : number_of_vdo,
+        # 'no_label' : number_of_label,
+        'data':data,
+        'page':page_list,
+        'current_page':page, 
+        'next_page' : page + 1, 
+        'previous_page' : page - 1
+    }
+    # for f in csv_file:
+    #     file_list["name"].append(name)
+    # file_list["url"].append(f)
+        #  "url": f}
+    context = {'field':field}
+    template = 'videos.html'
     return render(req, template, context)

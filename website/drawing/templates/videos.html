@@ -1,0 +1,127 @@
+{% extends 'template.html' %}
+{% load bootstrap4 %}
+{% load static %}
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <table class="table">
+            <tr>
+                <td colspan="3">
+                    <h2>Underwater Dataset</h2>
+                </td>
+                <td colspan="2" align="right">
+                    <!-- <h4>Lable status: {{ field.no_label }} / {{ field.no_img }}</h3> -->
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="5">
+                    <nav aria-label="...">
+                        <ul class="pagination justify-content-center">
+                            {% if  field.current_page < 1 %}
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" tabindex="-1">Previous</a>
+                            </li>
+                            {% else %}
+                            <li class="page-item">
+                                <a class="page-link" href="{{ field.previous_page }}">Previous</a>
+                            </li>
+                            {% endif %}
+
+
+                            {% if field.page %}
+                            {% for i in field.page %}
+                            {% if i == field.current_page %}
+
+                            <li class="page-item active "><a class="page-link" href="{{ i }}">{{ i }}</a></li>
+
+                            {% else %}
+                            <li class="page-item"><a class="page-link" href="{{ i }}">{{ i }}</a></li>
+
+                            {% endif %}
+                            {% endfor %}
+                            {% endif %}
+                            <!-- <li class="page-item"><a class="page-link" href="#">3</a></li> -->
+                            <li class="page-item">
+                                <a class="page-link" href="{{ field.next_page }}">Next</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </td>
+            </tr>
+
+            {% if field %}
+            <tr>
+                {% for d in field.data %}
+                <td>
+                    {% for value in d %}
+                    <table class="table">
+                        <tr>
+                            <td class="align-middle">
+                                <video width="484" height="304" autoplay>
+                                    <source src="{{ value.0 }}" type="audio/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                            </td>
+
+
+                        </tr>
+                        <tr>
+
+
+                            <td>
+                                <a href="{{ value.0 }}">{{ value.1 }}</a>
+                            </td>
+
+                        </tr>
+                    </table>
+                    {% endfor %}
+                </td>
+                {% endfor %}
+            </tr>
+            {% endif %}
+
+        </table>
+    </div>
+
+    <!-- <div class="col-md-1"></div> -->
+</div>
+<div class="row">
+    <div class="col-md-12">
+
+        <nav aria-label="...">
+            <ul class="pagination justify-content-center">
+                {% if  field.current_page < 1 %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1">Previous</a>
+                </li>
+                {% else %}
+                <li class="page-item">
+                    <a class="page-link" href="{{ field.previous_page }}">Previous</a>
+                </li>
+                {% endif %}
+
+
+                {% if field.page %}
+                {% for i in field.page %}
+                {% if i == field.current_page %}
+
+                <li class="page-item active "><a class="page-link" href="{{ i }}">{{ i }}</a></li>
+
+                {% else %}
+                <li class="page-item"><a class="page-link" href="{{ i }}">{{ i }}</a></li>
+
+                {% endif %}
+                {% endfor %}
+                {% endif %}
+                <!-- <li class="page-item"><a class="page-link" href="#">3</a></li> -->
+                <li class="page-item">
+                    <a class="page-link" href="{{ field.next_page }}">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+<br />
+<br />
+{% endblock %}
