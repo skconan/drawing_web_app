@@ -21,6 +21,8 @@ from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('marker/', views_drawing.masker, name="masker"),
+    path('', views_drawing.index, name="index"),
+    path('index/', views_drawing.index, name="index"),
+    path('label/', views_drawing.label, name="label"),
     path('upload/', views_drawing.upload, name="upload")
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)   
