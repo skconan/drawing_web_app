@@ -5,6 +5,7 @@ from image_processing.image_processing import *
 from image_processing.models import Image
 import random
 
+PATH_IMG = settings.MEDIA_URL+"dataset/images/"
 
 # Create your views here.
 def masker(req):
@@ -24,7 +25,10 @@ def masker(req):
         index = random.randint(0,len(i)-1)
         image_name = i[index].name
         # image_url = i[index].url
-        image_url = 'http://robin-gpu.cpe.ku.ac.th:8000/media/dataset/images/'+image_name+".jpg"
+        url = req.get_full_path().split["/"]
+        url = "".join(url[0:3])
+        print(url)
+        image_url = url + '/media/dataset/images/'+image_name+".jpg"
         
         context = {'img_name':image_name,'img_url':image_url}
     return render(req, template, context)
