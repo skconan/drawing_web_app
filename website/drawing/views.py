@@ -86,18 +86,20 @@ def dataset(req,page=1):
     number_of_label = ImageTable.objects.filter(mask=True).count()
     # images_list = images_list.order_by('-created_date')
 
-    data = [[]]*5
+    data = []
     count = 0
-    data_per_page = 40
+    data_per_page = 30
     
     start_index = (page-1)*data_per_page
     stop_index = page*data_per_page
-
+    d = []
     for img in images_list[start_index:stop_index]:
         image_url = settings.MEDIA_URL + 'dataset/images/'+img.name+".jpg"
-        data[count].append([image_url, str(img.name)])
         count += 1
+        d.append([image_url, str(img.name)])
         if count == 5:
+            data.append(d)
+            d = []
             count = 0
 
     # page_list = list(range(1,len(images_list)//data_per_page + 1))[:10]
