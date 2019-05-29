@@ -18,16 +18,19 @@ def record(image_name):
 
 
 def video2img(file_name, sampling):
-    file_path = settings.MEDIA_ROOT+"videos/"+file_name
+    file_path = settings.MEDIA_ROOT+"/videos/"+file_name
+    print("File path:",file_path)
     cap = cv.VideoCapture(file_path)
+    print("Video2Image",cap.isOpened())
     count = 0
     count_false = 0
     while(cap.isOpened()):
+        print("Count",count)
         image_name = str(time.time()).replace(".","_")
         ret, frame = cap.read()
         if not ret:
             count_false += 1
-            if count_false > 30:
+            if count_false > sampling:
                 cap.release()
                 break
             continue
