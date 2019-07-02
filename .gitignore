@@ -29,3 +29,5 @@ venv.bak/
 static\
 static
 media/
+
+*.swp

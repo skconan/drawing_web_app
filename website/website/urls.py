@@ -23,6 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views_drawing.index, name="index"),
     path('index/', views_drawing.index, name="index"),
+    path('reset_is_label/', views_drawing.reset_is_label, name="reset_is_label"),
     path('label/', views_drawing.label, name="label"),
     path('upload/', views_drawing.upload, name="upload"),
     path('dataset/<int:page>', views_drawing.dataset, name="dataset"),
