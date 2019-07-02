@@ -51,10 +51,10 @@
       </tr>
 
       {% if field %}
-      <tr>
-        {% for d in field.data %}
-        <td>
+      {% for d in field.data %}
+        <tr>
           {% for value in d %}
+          <td>
             <table class="table">
               <tr>
               <td class="align-middle">
@@ -72,10 +72,10 @@
               
             </tr>
           </table>
-              {% endfor %}
         </td>
+              {% endfor %}
+            </tr>
         {% endfor %}
-      </tr>
       {% endif %}
 
     </table>
