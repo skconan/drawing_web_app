@@ -8,6 +8,7 @@ import website.settings as settings
 
 from image_processing.models import Image as ImageTable
 from .models import VideoUpload as VideoTable
+import os
 
 PATH_IMG = settings.MEDIA_URL+"dataset/images/"
 
@@ -15,20 +16,28 @@ PATH_IMG = settings.MEDIA_URL+"dataset/images/"
 def label(req):
     images_list = ImageTable.objects.all()
     number_of_img = images_list.count()
-    number_of_label = ImageTable.objects.filter(mask=True).count()
+    number_of_label = ImageTable.objects.filter(is_label=True).count()
     context = {}
     template = 'label.html'
     if req.method == 'POST':
         print("POST")
-        image_data = req.POST['mask-result']
+        is_del = req.POST['del-status']
         image_name = req.POST['image-name']
-        save_canvas(image_data,image_name)
-        i = Image.objects.get(name=image_name)
-        i.mask = True
-        i.save()
+        if is_del == 'del':
+            Image.objects.filter(name=image_name).delete()
+            if os.path.exists(settings.MEDIA_ROOT+"/dataset/images/" + image_name + '.jpg'):
+                os.remove(settings.MEDIA_ROOT+"/dataset/images/" + image_name + '.jpg')
+                print("removed")
+        else:
+            image_data = req.POST['mask-result']
+
+            save_canvas(image_data,image_name)
+            i = Image.objects.get(name=image_name)
+            i.is_label = True
+            i.save()
         return redirect('label')
     else:      
-        i = Image.objects.filter(mask=False)
+        i = Image.objects.filter(is_label=False).all()
         index = random.randint(0,len(i)-1)
         image_name = i[index].name
     
@@ -80,24 +89,31 @@ def index(req):
     return render(req, template, context)
 
 
+def reset_is_label(req):
+    images_list = ImageTable.objects.all()
+    images_list.update(is_label=False)
+    return HttpResponse("Done")
+
 def dataset(req,page=1):
     images_list = ImageTable.objects.all()
     number_of_img = images_list.count()
-    number_of_label = ImageTable.objects.filter(mask=True).count()
+    number_of_label = ImageTable.objects.filter(is_label=True).count()
     # images_list = images_list.order_by('-created_date')
 
-    data = [[]]*5
+    data = []
     count = 0
-    data_per_page = 40
+    data_per_page = 30
     
     start_index = (page-1)*data_per_page
     stop_index = page*data_per_page
-
+    d = []
     for img in images_list[start_index:stop_index]:
         image_url = settings.MEDIA_URL + 'dataset/images/'+img.name+".jpg"
-        data[count].append([image_url, str(img.name)])
         count += 1
+        d.append([image_url, str(img.name)])
         if count == 5:
+            data.append(d)
+            d = []
             count = 0
 
     # page_list = list(range(1,len(images_list)//data_per_page + 1))[:10]
