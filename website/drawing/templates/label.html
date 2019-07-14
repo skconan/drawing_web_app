@@ -37,11 +37,16 @@
             </div>
             <div class="row">
                 <div class="col-md-6">
-                    <button type="button" class="btn btn-danger" id="btn-clear">Clear</button>
+                    <!-- <button type="button" class="btn btn-danger" id="btn-clear">Clear</button> -->
                     <button type="submit" class="btn btn-success" id="btn-save">Save</button>
                 </div>
                 <div class="col-md-2 checkbox">
-                    <label><input id="checkbox-del" type="checkbox" value="" onclick="delete_status()">Delete</label>
+                    <form method="POST">{% csrf_token %}
+                        <input name="delete" type="hidden" value="{{ img_name }}">
+                        <button type="submit" class="btn btn-danger"> Delete </button>
+                    </form>
+
+
                 </div>
                 <div class="col-md-4">
                     <button type="button" onClick="location.reload()" class="btn btn-primary">Refresh</button>
@@ -58,11 +63,11 @@
     }
 </style>
 <script>
-    function delete_status(){
+    function delete_status() {
         var bool = document.getElementById("checkbox-del").checked
-        if (bool){
+        if (bool) {
             document.getElementById("del-status").value = "del"
-        }else{
+        } else {
             document.getElementById("del-status").value = "save"
         }
     }

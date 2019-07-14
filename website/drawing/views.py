@@ -21,9 +21,10 @@ def label(req):
     template = 'label.html'
     if req.method == 'POST':
         print("POST")
-        is_del = req.POST['del-status']
+
         image_name = req.POST['image-name']
-        if is_del == 'del':
+        
+        if 'delete' in req.POST:
             Image.objects.filter(name=image_name).delete()
             if os.path.exists(settings.MEDIA_ROOT+"/dataset/images/" + image_name + '.jpg'):
                 os.remove(settings.MEDIA_ROOT+"/dataset/images/" + image_name + '.jpg')
