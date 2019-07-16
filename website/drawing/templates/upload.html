@@ -9,6 +9,17 @@
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.video }}
+            <table class="table">
+                <tr>
+                    <td>
+                        Mission1
+                    </td>
+                    <td>
+                        <input type="text" name="mission1" class="form-control" >
+                    </td>
+                </tr>
+            </table>
+
             <button type="submit" class="btn btn-primary">Upload</button>
         </form>
     </div>
