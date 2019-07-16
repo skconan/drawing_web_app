@@ -11,13 +11,13 @@
             {{ form.video }}
             <br>
             <table class="table">
-                {% for i in [1,2,3,4,5] %}
+                {% for i in mission_n %}
                     <tr>
                         <td>
-                            Mission{{i}}
+                            Mission{{i+1}}
                         </td>
                         <td>
-                            <input type="text" name="mission{{i}}" class="form-control-sm" >
+                            <input type="text" name="mission{{i+1}}" class="form-control-sm" >
                         </td>
                     </tr>
                 {% endfor %}

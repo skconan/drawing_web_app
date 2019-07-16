@@ -67,7 +67,7 @@ def upload(req):
             return render(req, "status.html", {"status":"Video Uploaded"})
     else:
         form = UploadForm()
-    context = {'form':form}
+    context = {'form':form, 'mission_n':range(5)}
     return render(req, template, context)
 
 def index(req):
