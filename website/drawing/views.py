@@ -8,6 +8,7 @@ import website.settings as settings
 
 from image_processing.models import Image as ImageTable
 from .models import VideoUpload as VideoTable
+from .models import Mission as MissionTable
 import os
 
 PATH_IMG = settings.MEDIA_URL+"dataset/images/"
@@ -19,6 +20,13 @@ def label(req):
     number_of_label = ImageTable.objects.filter(is_label=True).count()
     context = {}
     template = 'label.html'
+
+    mission_list = MissionTable.objects.all()
+    mission_name = []
+
+    for m in mission_list:
+        mission_name.append(m.name)
+    
     if req.method == 'POST':
         print("POST")
 
@@ -49,6 +57,7 @@ def label(req):
             'img_url':image_url,
             'no_img' : number_of_img,
         'no_label' : number_of_label,
+        'mission_name' :mission_name,
         }
     return render(req, template, context)
 

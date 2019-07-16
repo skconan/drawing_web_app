@@ -35,12 +35,25 @@
                 </div>
 
             </div>
+            <div class="col-md-12">
+                <div class="col-md-3">
+                    <!-- <button type="button" class="btn btn-danger" id="btn-clear">Clear</button> -->
+                    <button type="submit" class="btn btn-success" id="btn-save">Save</button>
+                </div>
+                <div class="col-md-6">
+                    {% for m in mission_name %}
+                    <label class="checkbox-inline"><input name="{{m}}" type="checkbox" value="">{{m}}</label>
+                </div>
+
+                <div class="col-md-3">
+                </div>
+            </div>
             <div class="row">
                 <div class="col-md-6">
                     <!-- <button type="button" class="btn btn-danger" id="btn-clear">Clear</button> -->
                     <button type="submit" class="btn btn-success" id="btn-save">Save</button>
                 </div>
-                <div class="col-md-2 checkbox">
+                <div class="col-md-2">
                     <form method="POST">{% csrf_token %}
                         <input name="delete" type="hidden" value="{{ img_name }}">
                         <button type="submit" class="btn btn-danger"> Delete </button>
