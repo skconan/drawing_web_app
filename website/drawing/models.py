@@ -10,6 +10,6 @@ class VideoUpload(models.Model):
         return self.name
 
 class Mission(models.Model):
-    name = models.CharField(primary_key=True,max_length=50)
+    name = models.CharField(primary_key=True,max_length=20)
     color = models.CharField(max_length=10)
     labeled = models.IntegerField()
