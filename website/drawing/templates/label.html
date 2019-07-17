@@ -77,14 +77,26 @@
     }
 </style>
 <script>
-    function delete_status() {
-        var bool = document.getElementById("checkbox-del").checked
-        if (bool) {
-            document.getElementById("del-status").value = "del"
-        } else {
-            document.getElementById("del-status").value = "save"
+    // function delete_status() {
+    //     var bool = document.getElementById("checkbox-del").checked
+    //     if (bool) {
+    //         document.getElementById("del-status").value = "del"
+    //     } else {
+    //         document.getElementById("del-status").value = "save"
+    //     }
+    // }
+    {% for m in mission_name %} 
+        function {{m}}(){
+            var bool = document.getElementById("m").checked
+            if (bool) {
+                document.getElementById("m").value = "check"
+            } else {
+                document.getElementById("m").value = "not_check"
+            }
+        
         }
-    }
+    {% endfor %}
+
     var maskResult = document.getElementById('mask-result');
     var color_list = document.getElementById('color-list')
 
