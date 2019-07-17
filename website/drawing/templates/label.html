@@ -41,7 +41,7 @@
                 </div>
                 <div class="col-md-6">
                     {% for m in mission_name %}
-                    <label class="checkbox-inline"><input name="checkbox-{{m}}" id="checkbox-{{m}}" type="checkbox" value=""> {{m}}</label>
+                    <label class="checkbox-inline"><input onclick="{{m}}_status" name="checkbox-{{m}}" id="checkbox-{{m}}" type="checkbox" value=""> {{m}}</label>
                     {% endfor %}
                 </div>
 
@@ -51,7 +51,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <!-- <button type="button" class="btn btn-danger" id="btn-clear">Clear</button> -->
-                    <button type="submit" class="btn btn-success" id="btn-save">Save</button>
+                    <button type="submit" class="btn btn-success" id="btn-save" >Save</button>
                 </div>
 </form>
 
