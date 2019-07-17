@@ -25,7 +25,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <input id="mask-result" name="mask-result" type="hidden" value="">
-                    <input id="del-status" name="del-status" type="hidden" value="">
+                  
                     <input name="image-name" type="hidden" value="{{ img_name }}">
 
                     <input id="img-url" type="hidden" value="{{ img_url }}">
@@ -53,6 +53,8 @@
                     <!-- <button type="button" class="btn btn-danger" id="btn-clear">Clear</button> -->
                     <button type="submit" class="btn btn-success" id="btn-save">Save</button>
                 </div>
+</form>
+
                 <div class="col-md-2">
                     <form method="POST">{% csrf_token %}
                         <input name="delete" type="hidden" value="{{ img_name }}">
@@ -68,7 +70,6 @@
         </div>
         <div class="col-md-1"></div>
     </div>
-</form>
 <br />
 <style>
     .board {
