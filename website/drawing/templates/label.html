@@ -41,7 +41,7 @@
                 </div>
                 <div class="col-md-6">
                     {% for m in mission_name %}
-                    <label class="checkbox-inline"><input name="checkbox-{{m}}" type="checkbox" value=""> {{m}}</label>
+                    <label class="checkbox-inline"><input name="checkbox-{{m}}" id="checkbox-{{m}}" type="checkbox" value=""> {{m}}</label>
                     {% endfor %}
                 </div>
 
@@ -86,12 +86,12 @@
     //     }
     // }
     {% for m in mission_name %} 
-        function {{m}}(){
-            var bool = document.getElementById("m").checked
+        function {{m}}_status (){
+            var bool = document.getElementById({{m}}+"-checkbox").checked
             if (bool) {
-                document.getElementById("m").value = "check"
+                document.getElementById({{m}}+"-checkbox").value = "check"
             } else {
-                document.getElementById("m").value = "not_check"
+                document.getElementById({{m}}+"-checkbox").value = "not_check"
             }
         
         }
