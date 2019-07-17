@@ -46,8 +46,9 @@ def label(req):
                 try:
                     mtable = MissionTable.objects.filter(name=m)
                     if req.POST['checkbox-'+m] == 'check':
-                        print('update labeled')
+                        print(m, 'update labeled')
                         no = mtable.labeled + 1
+                        print(mtable.labeled,no)
                         mtable.update(labeled = no)
                 except:
                     pass
