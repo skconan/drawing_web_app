@@ -45,11 +45,13 @@ def label(req):
                 print(m+">"+req.POST['checkbox-'+m])
                 try:
                     mtable = MissionTable.objects.filter(name=m)
-                    no = mtable.labeled + 1
-                    mtable.update(labeled = no)
+                    if req.POST['checkbox-'+m] == 'check':
+                        print('update labeled')
+                        no = mtable.labeled + 1
+                        mtable.update(labeled = no)
                 except:
                     pass
-                    
+
             image_data = req.POST['mask-result']
 
             save_canvas(image_data,image_name)
