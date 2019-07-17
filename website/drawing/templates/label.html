@@ -87,11 +87,11 @@
     // }
     {% for m in mission_name %} 
         function {{m}}_status (){
-            var bool = document.getElementById("{{m}}-checkbox").checked
+            var bool = document.getElementById("checkbox-{{m}}").checked
             if (bool) {
-                document.getElementById("{{m}}-checkbox").value = "check"
+                document.getElementById("checkbox-{{m}}").value = "check"
             } else {
-                document.getElementById("{{m}}-checkbox").value = "not_check"
+                document.getElementById("checkbox-{{m}}").value = "not_check"
             }
         
         }
