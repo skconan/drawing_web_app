@@ -41,7 +41,7 @@
                 </div>
                 <div class="col-md-6">
                     {% for m in mission_name %}
-                    <label class="checkbox-inline"><input onclick="{{m}}_status" name="checkbox-{{m}}" id="checkbox-{{m}}" type="checkbox" value=""> {{m}}</label>
+                    <label class="checkbox-inline"><input onclick="{{m}}_status()" name="checkbox-{{m}}" id="checkbox-{{m}}" type="checkbox" value="not_check"> {{m}}</label>
                     {% endfor %}
                 </div>
 
