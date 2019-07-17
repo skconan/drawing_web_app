@@ -30,8 +30,8 @@ def label(req):
     
     if req.method == 'POST':
         print("POST")
-        for m in mission_name:
-            print(m+">"+req.POST['checkbox-'+m])
+        
+
         
         image_name = req.POST['image-name']
         
@@ -41,6 +41,12 @@ def label(req):
                 os.remove(settings.MEDIA_ROOT+"/dataset/images/" + image_name + '.jpg')
                 print("removed")
         else:
+            for m in mission_name:
+                print(m+">"+req.POST['checkbox-'+m])
+                mtable = MissionTable.objects.filter(name=m)
+                no = mtable.labeled + 1
+                mtable.update(labeled = no)
+
             image_data = req.POST['mask-result']
 
             save_canvas(image_data,image_name)
