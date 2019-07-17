@@ -13,6 +13,11 @@ import os
 
 PATH_IMG = settings.MEDIA_URL+"dataset/images/"
 
+mission_list = MissionTable.objects.all()
+mission_name = []
+for m in mission_list:
+    mission_name.append(m.name)
+
 # Create your views here.
 def label(req):
     images_list = ImageTable.objects.all()
@@ -21,11 +26,7 @@ def label(req):
     context = {}
     template = 'label.html'
 
-    mission_list = MissionTable.objects.all()
-    mission_name = []
 
-    for m in mission_list:
-        mission_name.append(m.name)
     
     if req.method == 'POST':
         print("POST")
@@ -64,6 +65,8 @@ def label(req):
 def upload(req):
     template = 'upload.html'
     if req.method == 'POST':
+        for m in mission_name:
+            print(m+">"+req.POST['checkbox_'+m])
         print(req)
         form = UploadForm(req.POST, req.FILES)
         if form.is_valid():
