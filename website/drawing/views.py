@@ -30,7 +30,9 @@ def label(req):
     
     if req.method == 'POST':
         print("POST")
-
+        for m in mission_name:
+            print(m+">"+req.POST['checkbox_'+m])
+        
         image_name = req.POST['image-name']
         
         if 'delete' in req.POST:
@@ -65,9 +67,7 @@ def label(req):
 def upload(req):
     template = 'upload.html'
     if req.method == 'POST':
-        for m in mission_name:
-            print(m+">"+req.POST['checkbox_'+m])
-        print(req)
+        
         form = UploadForm(req.POST, req.FILES)
         if form.is_valid():
             # form.save()
