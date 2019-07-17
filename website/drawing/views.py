@@ -31,7 +31,7 @@ def label(req):
     if req.method == 'POST':
         print("POST")
         for m in mission_name:
-            print(m+">"+req.POST['checkbox_'+m])
+            print(m+">"+req.POST['checkbox-'+m])
         
         image_name = req.POST['image-name']
         
