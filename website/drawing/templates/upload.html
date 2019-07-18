@@ -13,6 +13,11 @@
             <table class="table">
                     <br>
                     {% for name in mission_name %}
+                    <tr>
+                        <thead>
+                            Mission Name
+                        </thead>
+                    </tr>
                         <tr>
                             <td>
                                 {{name}}
@@ -27,7 +32,7 @@
                 {% for i in mission_n %}
                     <tr>
                         <td>
-                            Mission{{i}}
+                            Mission {{i}}
                         </td>
                         <td>
                             <input type="text" name="textbox_mission_{{i}}" class="form-control-sm" >
@@ -36,7 +41,10 @@
                 {% endfor %}
             </table>
 
-            <button type="submit" class="btn btn-primary">Upload</button>
+            <button type="submit" class="btn btn-primary btn-block">Upload</button>
+            <br>
+            <br>
+
         </form>
     </div>
 
