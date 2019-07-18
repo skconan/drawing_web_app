@@ -22,9 +22,9 @@ def record(image_name, mission_list):
             mission[2],
             mission[3],
             mission[4],
-            mission[5],
-            mission[6],
-            mission[7],
+            # mission[5],
+            # mission[6],
+            # mission[7],
             )
     i.save()
 

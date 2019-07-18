@@ -89,10 +89,16 @@ def label(req):
 def upload(req):
     template = 'upload.html'
     mission_n = range(1,6)
+
+    mission_list = MissionTable.objects.all()
+    mission_name = []
+    for m in mission_list:
+        mission_name.append(m.name)
+
     if req.method == 'POST':
         mission_list = []
         for i in mission_n:
-            print(i)
+            # print(i)
             txt_box = "textbox_mission_"+str(i)
             if txt_box in req.POST:
                 # print(req.POST[txt_box])
@@ -109,7 +115,7 @@ def upload(req):
             return render(req, "status.html", {"status":"Video Uploaded"})
     else:
         form = UploadForm()
-    context = {'form':form, 'mission_n':mission_n}
+    context = {'form':form, 'mission_n':mission_n, 'mission_name':mission_name}
     return render(req, template, context)
 
 def index(req):
