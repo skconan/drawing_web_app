@@ -13,19 +13,21 @@ import os
 
 PATH_IMG = settings.MEDIA_URL+"dataset/images/"
 
-mission_list = MissionTable.objects.all()
-mission_name = []
-for m in mission_list:
-    mission_name.append(m.name)
+
 
 # Create your views here.
 def label(req):
+    global mission_name
     images_list = ImageTable.objects.all()
     number_of_img = images_list.count()
     number_of_label = ImageTable.objects.filter(is_label=True).count()
     context = {}
     template = 'label.html'
 
+    mission_list = MissionTable.objects.all()
+    mission_name = []
+    for m in mission_list:
+        mission_name.append(m.name)
 
     
     if req.method == 'POST':
