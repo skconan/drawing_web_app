@@ -12,12 +12,24 @@ PATH_IMG = settings.MEDIA_ROOT+"/dataset/images/"
 PATH_GROUNDTRUTH = settings.MEDIA_ROOT+"/dataset/groundTruth/"
 
 
-def record(image_name):
-    i = Img(image_name, False)
+def record(image_name, mission_list):
+    mission = []
+    for m in mission_list:
+        mission.append(m)
+    i = Img(image_name, False, 
+            mission[0],
+            mission[1],
+            mission[2],
+            mission[3],
+            mission[4],
+            mission[5],
+            mission[6],
+            mission[7],
+            )
     i.save()
 
 
-def video2img(file_name, sampling):
+def video2img(file_name, sampling, mission_list):
     file_path = settings.MEDIA_ROOT+"/videos/"+file_name
     print("File path:",file_path)
     cap = cv.VideoCapture(file_path)
@@ -41,7 +53,7 @@ def video2img(file_name, sampling):
             r = 304  # //1216 / 4
             img = cv.resize(frame, (c, r))
             cv.imwrite(PATH_IMG + image_name+ ".jpg", img)
-            record(image_name)
+            record(image_name, mission_list)
             count_false = 0
         count += 1
 

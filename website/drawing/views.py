@@ -90,12 +90,14 @@ def upload(req):
     template = 'upload.html'
     mission_n = range(1,6)
     if req.method == 'POST':
+        mission_list = []
         for i in mission_n:
             print(i)
             txt_box = "textbox_mission_"+str(i)
             if txt_box in req.POST:
-                print(req.POST[txt_box])
-            print("----")
+                # print(req.POST[txt_box])
+                mission_list.append(req.POST[txt_box])
+            # print("----")
         form = UploadForm(req.POST, req.FILES)
         if form.is_valid():
             # form.save()
@@ -103,7 +105,7 @@ def upload(req):
             form.original_filename = req.FILES['video'].name
             form.name = req.FILES['video'].name
             form.save()
-            video2img(req.FILES['video'].name,15)
+            video2img(req.FILES['video'].name,15, mission_list)
             return render(req, "status.html", {"status":"Video Uploaded"})
     else:
         form = UploadForm()
