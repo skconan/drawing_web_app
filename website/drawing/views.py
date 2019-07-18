@@ -88,8 +88,13 @@ def label(req):
 
 def upload(req):
     template = 'upload.html'
+    mission_n = range(1,6)
     if req.method == 'POST':
-        
+        for i in mission_n:
+            txt_box = "textbox_mission_"+str(i)
+            if txt_box in req.POST:
+                print(req.POST[txt_box])
+                
         form = UploadForm(req.POST, req.FILES)
         if form.is_valid():
             # form.save()
@@ -101,7 +106,7 @@ def upload(req):
             return render(req, "status.html", {"status":"Video Uploaded"})
     else:
         form = UploadForm()
-    context = {'form':form, 'mission_n':range(1,6)}
+    context = {'form':form, 'mission_n':mission_n}
     return render(req, template, context)
 
 def index(req):
