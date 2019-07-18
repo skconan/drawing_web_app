@@ -27,8 +27,10 @@ def label(req):
 
     mission_list = MissionTable.objects.all()
     mission_name = []
+    mission_name_no = []
     for m in mission_list:
         mission_name.append(m.name)
+        mission_name_no.append([m.name,m.labeled])
 
     
     if req.method == 'POST':
@@ -91,8 +93,7 @@ def label(req):
             'img_url':image_url,
             'no_img' : number_of_img,
         'no_label' : number_of_label,
-        'mission_name' :mission_name,
-        'mission_no' :mission_no,
+        'mission_name_no' :mission_name_no,
         }
     return render(req, template, context)
 

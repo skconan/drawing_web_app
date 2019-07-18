@@ -40,11 +40,11 @@
 
                 </div>
                 <div class="col-md-6">
-                    {% for m in mission_name %}
+                    {% for m in mission_name_no %}
                     <div class="custom-control custom-switch">
-                        <input class="custom-control-input" onclick="{{m}}_status()" name="checkbox-{{m}}"
-                            id="checkbox-{{m}}" type="checkbox" value="not_check">
-                        <label class="custom-control-label" for="checkbox-{{m}}"> {{m}}</label> 
+                        <input class="custom-control-input" onclick="{{m.0}}_status()" name="checkbox-{{m.0}}"
+                            id="checkbox-{{m.0}}" type="checkbox" value="not_check">
+                        <label class="custom-control-label" for="checkbox-{{m.0}}"> {{m.0}} - {{m.1}} </label> 
                         <br />
                     </div>
                     {% endfor %}
@@ -82,13 +82,13 @@
     }
 </style>
 <script>
-    {% for m in mission_name %}
-    function {{ m }}_status(){
-        var bool = document.getElementById("checkbox-{{m}}").checked
+    {% for m in mission_name_no %}
+    function {{ m.0 }}_status(){
+        var bool = document.getElementById("checkbox-{{m.0}}").checked
         if (bool) {
-            document.getElementById("checkbox-{{m}}").value = "check"
+            document.getElementById("checkbox-{{m.0}}").value = "check"
         } else {
-            document.getElementById("checkbox-{{m}}").value = "not_check"
+            document.getElementById("checkbox-{{m.0}}").value = "not_check"
         }
 
     }
