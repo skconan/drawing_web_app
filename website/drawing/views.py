@@ -5,6 +5,7 @@ from image_processing.image_processing import *
 from image_processing.models import Image
 import random
 import website.settings as settings
+from django.db.models import Q
 
 from image_processing.models import Image as ImageTable
 from .models import VideoUpload as VideoTable
@@ -66,11 +67,19 @@ def label(req):
     else:      
         mission_list = MissionTable.objects.all()
         mission_name = []
-        mission_no = []
+        min = 100000000
+        min_name = ""
         for m in mission_list:
             mission_name.append(m.name)
-            mission_no.append(m.labeled)
-        i = Image.objects.filter(is_label=False).all()
+            if m.labeled < min:
+                min_name = m.name
+
+        i = Image.objects.filter(Q(is_label=False) &
+             Q(mission_1=min_name) |
+             Q(mission_2=min_name) |
+             Q(mission_3=min_name) |
+             Q(mission_4=min_name) |
+             Q(mission_5=min_name) ).all()
         index = random.randint(0,len(i)-1)
         image_name = i[index].name
     
