@@ -44,7 +44,8 @@
                     <div class="custom-control custom-switch">
                         <input class="custom-control-input" onclick="{{m}}_status()" name="checkbox-{{m}}"
                             id="checkbox-{{m}}" type="checkbox" value="not_check">
-                        <label class="custom-control-label" for="checkbox-{{m}}"> {{m}}</label> <br />
+                        <label class="custom-control-label" for="checkbox-{{m}}"> {{m}}</label> 
+                        <br />
                     </div>
                     {% endfor %}
                 </div>
@@ -82,7 +83,7 @@
 </style>
 <script>
     {% for m in mission_name %}
-    function { { m } } _status(){
+    function {{ m }}_status(){
         var bool = document.getElementById("checkbox-{{m}}").checked
         if (bool) {
             document.getElementById("checkbox-{{m}}").value = "check"
