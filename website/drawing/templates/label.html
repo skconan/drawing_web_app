@@ -25,7 +25,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <input id="mask-result" name="mask-result" type="hidden" value="">
-                  
+
                     <input name="image-name" type="hidden" value="{{ img_name }}">
 
                     <input id="img-url" type="hidden" value="{{ img_url }}">
@@ -37,12 +37,15 @@
             </div>
             <div class="row">
                 <div class="col-md-3">
-                   
+
                 </div>
-                <div class="col-md-6 custom-control custom-switch">
+                <div class="col-md-6">
                     {% for m in mission_name %}
-                    <input class="custom-control-input" onclick="{{m}}_status()" name="checkbox-{{m}}" id="checkbox-{{m}}" type="checkbox" value="not_check">
-                    <label class="custom-control-label" for="checkbox-{{m}}"> {{m}}</label> <br/>
+                    <div class="custom-control custom-switch">
+                        <input class="custom-control-input" onclick="{{m}}_status()" name="checkbox-{{m}}"
+                            id="checkbox-{{m}}" type="checkbox" value="not_check">
+                        <label class="custom-control-label" for="checkbox-{{m}}"> {{m}}</label> <br />
+                    </div>
                     {% endfor %}
                 </div>
 
@@ -52,25 +55,25 @@
             <div class="row">
                 <div class="col-md-6">
                     <!-- <button type="button" class="btn btn-danger" id="btn-clear">Clear</button> -->
-                    <button type="submit" class="btn btn-success" id="btn-save" >Save</button>
+                    <button type="submit" class="btn btn-success" id="btn-save">Save</button>
                 </div>
 </form>
 
-                <div class="col-md-2">
-                    <form method="POST">{% csrf_token %}
-                        <input name="delete" type="hidden" value="{{ img_name }}">
-                        <button type="submit" class="btn btn-danger"> Delete </button>
-                    </form>
+<div class="col-md-2">
+    <form method="POST">{% csrf_token %}
+        <input name="delete" type="hidden" value="{{ img_name }}">
+        <button type="submit" class="btn btn-danger"> Delete </button>
+    </form>
 
 
-                </div>
-                <div class="col-md-4">
-                    <button type="button" onClick="location.reload()" class="btn btn-primary">Refresh</button>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-1"></div>
-    </div>
+</div>
+<div class="col-md-4">
+    <button type="button" onClick="location.reload()" class="btn btn-primary">Refresh</button>
+</div>
+</div>
+</div>
+<div class="col-md-1"></div>
+</div>
 <br />
 <style>
     .board {
@@ -78,16 +81,16 @@
     }
 </style>
 <script>
-    {% for m in mission_name %} 
-        function {{m}}_status (){
-            var bool = document.getElementById("checkbox-{{m}}").checked
-            if (bool) {
-                document.getElementById("checkbox-{{m}}").value = "check"
-            } else {
-                document.getElementById("checkbox-{{m}}").value = "not_check"
-            }
-        
+    {% for m in mission_name %}
+    function { { m } } _status(){
+        var bool = document.getElementById("checkbox-{{m}}").checked
+        if (bool) {
+            document.getElementById("checkbox-{{m}}").value = "check"
+        } else {
+            document.getElementById("checkbox-{{m}}").value = "not_check"
         }
+
+    }
     {% endfor %}
 
     var maskResult = document.getElementById('mask-result');
