@@ -41,7 +41,8 @@
                 </div>
                 <div class="col-md-6 custom-control custom-switch">
                     {% for m in mission_name %}
-                    <label class="custom-control-label"><input class="custom-control-input" onclick="{{m}}_status()" name="checkbox-{{m}}" id="checkbox-{{m}}" type="checkbox" value="not_check"> {{m}}</label>
+                    <input class="custom-control-input" onclick="{{m}}_status()" name="checkbox-{{m}}" id="checkbox-{{m}}" type="checkbox" value="not_check">
+                    <label class="custom-control-label" for="checkbox-{{m}}"> {{m}}</label> <br/>
                     {% endfor %}
                 </div>
 
