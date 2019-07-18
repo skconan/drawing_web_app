@@ -44,8 +44,8 @@ def label(req):
                 print("removed")
         else:
             for m in mission_name:
-                print(m+">"+req.POST['checkbox-'+m])
                 try:
+                    print(m+">"+req.POST['checkbox-'+m])
                     mtable = MissionTable.objects.filter(name=m)[0]
                     if req.POST['checkbox-'+m] == 'check':
                         print(m, 'update labeled')
