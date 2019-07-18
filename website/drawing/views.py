@@ -74,12 +74,12 @@ def label(req):
             if m.labeled < min:
                 min_name = m.name
 
-        i = Image.objects.filter(Q(is_label=False) &
+        i = Image.objects.filter(Q(is_label=False) & (
              Q(mission_1=min_name) |
              Q(mission_2=min_name) |
              Q(mission_3=min_name) |
              Q(mission_4=min_name) |
-             Q(mission_5=min_name) ).all()
+             Q(mission_5=min_name)) ).all()
         index = random.randint(0,len(i)-1)
         image_name = i[index].name
     
