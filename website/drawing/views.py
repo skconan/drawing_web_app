@@ -91,10 +91,11 @@ def upload(req):
     mission_n = range(1,6)
     if req.method == 'POST':
         for i in mission_n:
+            print(i)
             txt_box = "textbox_mission_"+str(i)
             if txt_box in req.POST:
                 print(req.POST[txt_box])
-                
+            print("----")
         form = UploadForm(req.POST, req.FILES)
         if form.is_valid():
             # form.save()
