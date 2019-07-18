@@ -11,33 +11,45 @@
             {{ form.video }}
             <br>
             <table class="table">
-                    <br>
-                    {% for name in mission_name %}
-                    <tr>
-                        <thead>
-                            Mission Name
-                        </thead>
-                    </tr>
-                        <tr>
-                            <td>
-                                {{name}}
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </table>
                 <br>
+                <thead>
+                    <tr>
+                        <th>
+
+                            Mission Name
+                        </th>
+                    </tr>
+                </thead>
+                {% for name in mission_name %}
+
+                <tr>
+                    <td>
+                        {{name}}
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+            <br>
             <table class="table">
-                <p>Specify the mission name</p>
+                <thead>
+                    <tr>
+                        <th>
+
+                            Specify the mission name (Please see the mission name above)
+                        </th>
+                    </tr>
+                </thead>
+
                 <br>
                 {% for i in mission_n %}
-                    <tr>
-                        <td>
-                            Mission {{i}}
-                        </td>
-                        <td>
-                            <input type="text" name="textbox_mission_{{i}}" class="form-control-sm" >
-                        </td>
-                    </tr>
+                <tr>
+                    <td>
+                        Mission {{i}}
+                    </td>
+                    <td>
+                        <input type="text" name="textbox_mission_{{i}}" class="form-control-sm">
+                    </td>
+                </tr>
                 {% endfor %}
             </table>
 
