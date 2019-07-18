@@ -77,14 +77,6 @@
     }
 </style>
 <script>
-    // function delete_status() {
-    //     var bool = document.getElementById("checkbox-del").checked
-    //     if (bool) {
-    //         document.getElementById("del-status").value = "del"
-    //     } else {
-    //         document.getElementById("del-status").value = "save"
-    //     }
-    // }
     {% for m in mission_name %} 
         function {{m}}_status (){
             var bool = document.getElementById("checkbox-{{m}}").checked

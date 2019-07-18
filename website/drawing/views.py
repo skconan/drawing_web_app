@@ -50,7 +50,7 @@ def label(req):
                         print("a",mtable.labeled)
                         no = mtable.labeled + 1
                         print("b",mtable.labeled,no)
-                        mtable.update(labeled = no)
+                        MissionTable.objects.filter(name=m).update(labeled = no)
                 except:
                     pass
 
@@ -62,6 +62,12 @@ def label(req):
             i.save()
         return redirect('label')
     else:      
+        mission_list = MissionTable.objects.all()
+        mission_name = []
+        mission_no = []
+        for m in mission_list:
+            mission_name.append(m.name)
+            mission_no.append(m.labeled)
         i = Image.objects.filter(is_label=False).all()
         index = random.randint(0,len(i)-1)
         image_name = i[index].name
@@ -74,6 +80,7 @@ def label(req):
             'no_img' : number_of_img,
         'no_label' : number_of_label,
         'mission_name' :mission_name,
+        'mission_no' :mission_no,
         }
     return render(req, template, context)
 
