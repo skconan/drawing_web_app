@@ -26,6 +26,7 @@ urlpatterns = [
     path('reset_is_label/', views_drawing.reset_is_label, name="reset_is_label"),
     path('label/', views_drawing.label, name="label"),
     path('upload/', views_drawing.upload, name="upload"),
+    path('select_mission/', views_drawing.select_mission, name="select_mission"),
     path('dataset/<int:page>', views_drawing.dataset, name="dataset"),
     path('dataset/', views_drawing.dataset, name="dataset"),
     path('videos/<int:page>', views_drawing.videos, name="videos"),

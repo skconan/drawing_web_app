@@ -75,6 +75,8 @@ def label(req):
             mission_name.append(m.name)
             if m.labeled < min:
                 min_name = m.name
+        if "mission" in req.session:
+            min_name = req.session["mission"]
         print(min_name)
         i = Image.objects.filter(Q(is_label=False) & (
              Q(mission_1=min_name) |
@@ -82,6 +84,7 @@ def label(req):
              Q(mission_3=min_name) |
              Q(mission_4=min_name) |
              Q(mission_5=min_name)) ).all()
+        
         print(len(i))
         index = random.randint(0,len(i)-1)
         image_name = i[index].name
@@ -127,6 +130,25 @@ def upload(req):
     else:
         form = UploadForm()
     context = {'form':form, 'mission_n':mission_n, 'mission_name':mission_name}
+    return render(req, template, context)
+
+def upload(req):
+    template = 'upload.html'
+
+
+    mission_list = MissionTable.objects.all()
+    mission_name = []
+    for m in mission_list:
+        mission_name.append(m.name)
+
+    if req.method == 'POST':
+        txt_box = "textbox_mission"
+        if len(req.POST[txt_box]) > 0:
+            req.session['mission'] = req.POST[txt_box]
+            return HttpResponse("mission "+req.POST[txt_box]+" is selected")
+
+
+    context = {'mission_name':mission_name}
     return render(req, template, context)
 
 def index(req):

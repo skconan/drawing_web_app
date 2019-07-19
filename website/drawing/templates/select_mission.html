@@ -1,0 +1,63 @@
+{% extends 'template.html' %}
+{% load bootstrap4 %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8" align="center">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+          
+            <br>
+            <table class="table">
+                <br>
+                <thead>
+                    <tr>
+                        <th>
+
+                            Mission Name
+                        </th>
+                    </tr>
+                </thead>
+                {% for name in mission_name %}
+
+                <tr>
+                    <td>
+                        {{name}}
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th colspan="2">
+
+                            Specify the mission name (Please see the mission name above)
+                        </th>
+                    </tr>
+                </thead>
+
+                <br>
+                <tr>
+                    <td>
+                        Mission
+                    </td>
+                    <td>
+                        <input type="text" name="textbox_mission" class="form-control-sm">
+                    </td>
+                </tr>
+            </table>
+
+            <button type="submit" class="btn btn-primary btn-block">Upload</button>
+            <br>
+            <br>
+
+        </form>
+    </div>
+
+    <div class="col-md-2"></div>
+</div>
+
+{% endblock %}
