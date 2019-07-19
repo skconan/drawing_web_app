@@ -132,8 +132,8 @@ def upload(req):
     context = {'form':form, 'mission_n':mission_n, 'mission_name':mission_name}
     return render(req, template, context)
 
-def upload(req):
-    template = 'upload.html'
+def select_mission(req):
+    template = 'select_mission.html'
 
 
     mission_list = MissionTable.objects.all()
