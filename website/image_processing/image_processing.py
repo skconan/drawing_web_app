@@ -3,8 +3,7 @@ import time
 from .models import Image as Img
 from website import settings
 from io import BytesIO
-# from PIL import Image
-import Image
+from PIL import Image
 import re
 import base64
 import numpy as np
@@ -63,6 +62,7 @@ def save_canvas(image_data,image_name):
     im.save(PATH_GROUNDTRUTH+image_name+".png", 'PNG')
 
 def canvas2img(image_data):
+    print(image_data)
     image_data = re.sub("^data:image/png;base64,", "", image_data)
     image_data = base64.b64decode(image_data)
     image_data = BytesIO(image_data)
