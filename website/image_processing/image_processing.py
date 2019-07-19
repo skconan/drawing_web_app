@@ -31,13 +31,13 @@ def record(image_name, mission_list):
 
 def video2img(file_name, sampling, mission_list):
     file_path = settings.MEDIA_ROOT+"/videos/"+file_name
-    print("File path:",file_path)
+    # print("File path:",file_path)
     cap = cv.VideoCapture(file_path)
-    print("Video2Image",cap.isOpened())
+    # print("Video2Image",cap.isOpened())
     count = 0
     count_false = 0
     while(cap.isOpened()):
-        print("Count",count)
+        # print("Count",count)
         image_name = str(time.time()).replace(".","_")
         ret, frame = cap.read()
         if not ret:
