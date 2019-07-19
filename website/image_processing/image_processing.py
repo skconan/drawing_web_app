@@ -62,7 +62,7 @@ def save_canvas(image_data,image_name):
     im.save(PATH_GROUNDTRUTH+image_name+".png", 'PNG')
 
 def canvas2img(image_data):
-    print(image_data)
+    # print(image_data)
     image_data = re.sub("^data:image/png;base64,", "", image_data)
     image_data = base64.b64decode(image_data)
     image_data = BytesIO(image_data)
