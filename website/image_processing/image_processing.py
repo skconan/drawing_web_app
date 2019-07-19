@@ -3,7 +3,8 @@ import time
 from .models import Image as Img
 from website import settings
 from io import BytesIO
-from PIL import Image
+# from PIL import Image
+import Image
 import re
 import base64
 import numpy as np
