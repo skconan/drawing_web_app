@@ -60,6 +60,7 @@ def video2img(file_name, sampling, mission_list):
 def save_canvas(image_data,image_name):
     im = canvas2img(image_data)
     im.save(PATH_GROUNDTRUTH+image_name+".png", 'PNG')
+    im.save(PATH_GROUNDTRUTH.replace("groundTruth","groundTruthBackUp")+image_name+".png", 'PNG')
 
 def canvas2img(image_data):
     # print(image_data)
